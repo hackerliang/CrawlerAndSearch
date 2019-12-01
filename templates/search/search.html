@@ -64,7 +64,7 @@
                 {% endif %}
                 <br><br><br>
             {% empty %}
-                <p>No results found.</p>
+                <h5>No results found.</h5>
             {% endfor %}
 
 {#            {% if page.has_previous or page.has_next %}#}
@@ -74,6 +74,7 @@
 {#                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}#}
 {#                </div>#}
 {#            {% endif %}#}
+            {% if page.object_list %}
             <div aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     {% if page.has_previous %}
@@ -124,8 +125,10 @@
                     {% endif %}
                 </ul>
             </div>
+            {% endif%}
         {% else %}
-            <p>Nothing to search!</p>
+            <br>
+            <h5>Search something!</h5>
         {% endif %}
 </div>
 {% endblock %}
