@@ -100,6 +100,7 @@ class SearchView(object):
         self.searchqueryset = searchqueryset
         self.startTime = time.time()
         self.endTime = time.time()
+        self.page_range = None
 
         if form_class is None:
             self.form_class = ModelSearchForm
@@ -184,7 +185,19 @@ class SearchView(object):
         paginator = Paginator(self.results, self.results_per_page)
 
         try:
-            page = paginator.page(page_no)
+            page = paginator.get_page(page_no)
+            current_page_num = page.number
+            page_range = list(range(max(current_page_num - 2, 1), current_page_num)) + \
+                         list(range(current_page_num, min(current_page_num + 2, paginator.num_pages) + 1))
+            if page_range[0] - 1 >= 2:
+                page_range.insert(0, '...')
+            if paginator.num_pages - page_range[-1] >= 2:
+                page_range.append('...')
+            if page_range[0] != 1:
+                page_range.insert(0, 1)
+            if page_range[-1] != paginator.num_pages:
+                page_range.append(paginator.num_pages)
+            self.page_range = page_range
         except InvalidPage:
             raise Http404("No such page!")
 
@@ -208,7 +221,8 @@ class SearchView(object):
             'page': page,
             'paginator': paginator,
             'suggestion': None,
-            'time': (self.endTime - self.startTime)
+            'time': (self.endTime - self.startTime),
+            'page_range': self.page_range
         }
 
         if hasattr(self.results, 'query') and self.results.query.backend.include_spelling:
