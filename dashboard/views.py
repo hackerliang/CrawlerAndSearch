@@ -64,7 +64,7 @@ def spelling(q):
         # data = json.loads(data)
         # data = data['misspellingsAndCorrections']
     except:
-        print("NN")
+        # print("NN")
         pass
     # print(data)
     try:
