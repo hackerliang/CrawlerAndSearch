@@ -1,0 +1,82 @@
+{% extends 'ui-base.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+{% load highlight %}
+
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>A Simple Searching System</title>#}
+{#    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">#}
+{#</head>#}
+{% block body %}
+    <style>
+        span.highlighted{
+            color: #c00;
+        }
+    </style>
+
+    <form method="get" action=".">
+        <nav class="navbar navbar-expand-lg gbg-cloudy-knoxville">
+            <a href="" class="navbar-brand">
+                <img src="{% static 'img/png/ds_logo.png' %}" width="180" alt="">
+            </a>
+            <div class="form-group mx-sm-3 mb-2">
+                {{ form }}
+            </div>
+            <input type="submit" class="btn btn-primary" value="Search">
+        </nav>
+    </form>
+<div class="col-10 container-fluid">
+        {% if query %}
+            <br>
+            <div style="color: #70757a;">
+            About {{ paginator.count }} results in {{ time }} seconds
+            </div>
+            {% if suggestion is not None %}
+                <div style="color: #666;">
+                Searching for
+                {% for s in suggestion %}
+                    <a href="{% url 'haystack_search' %}?q={{ s }}">{{ s }}</a>
+                {% endfor %}?
+                </div>
+            {% endif %}
+                        <br>
+            {% for result in page.object_list %}
+                <div>
+                {% if result.object.url %}
+                    <h4>
+                        <a href="{{ result.object.url }}" target="_blank" style="color: #1a0dab">{% highlight result.object.title with query %}</a>
+                    </h4>
+                {% else %}
+                    <h4>
+                        <a href="{% url 'news-view' result.object.id %}" target="_blank" style="color: #1a0dab">{% highlight result.object.title with query %}</a>
+                    </h4>
+                {% endif %}
+                </div>
+                <div>{% highlight result.object.author with query %}</div>
+                <div>{% highlight result.object.content with query %}</div>
+                {% if result.object.url %}
+                    <a href="{{ result.object.url }}" target="_blank" style="color: green">{{ result.object.url }}</a>
+                    - <a href="{% url 'news-view' result.object.id %}" target="_blank" style="color: #666">UICds Snapshot</a>
+                {% else %}
+                     <a href="{% url 'news-view' result.object.id %}" target="_blank" style="color: green">http://search.uicds.xyz:8000{% url 'news-view' result.object.id %}</a>
+                {% endif %}
+                <br><br><br>
+            {% empty %}
+                <p>No results found.</p>
+            {% endfor %}
+
+            {% if page.has_previous or page.has_next %}
+                <div>
+                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                    |
+                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <p>Nothing to search!</p>
+        {% endif %}
+</div>
+{% endblock %}
+{#</html>#}

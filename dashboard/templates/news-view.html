@@ -1,0 +1,69 @@
+{% load staticfiles %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+
+
+{% block head_extends %}
+    <style>
+        #scroll-to-top {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="col-12">
+{#    <div class="row">#}
+{#        <div class="col">#}
+{#            <a href="{{ referer }}"><i class="fas fa-chevron-left fa-2x"#}
+{#                                                                           style="color: black"></i></a>#}
+{#        </div>#}
+{#        <div class="col">#}
+{#            <h4 class="text-center">{{ news.id }}</h4>#}
+{#        </div>#}
+{#        <div class="col"></div>#}
+{#    </div>#}
+
+    <a href="javascript:void(0)" id="scroll-to-top"><i class="fas fa-chevron-circle-up fa-3x"></i></a>
+    <table class="table mt-4 table-striped">
+        <tbody>
+{#        <tr>#}
+{#            <th scope="row">Material ID</th>#}
+{#            <td>{{ news.id }}</td>#}
+{#        </tr>#}
+        <tr>
+            <th scope="row">Title</th>
+            <td>{{ news.title }}</td>
+        </tr>
+        <tr>
+            <th scope="row">Author</th>
+            <td>{{ news.author }}</td>
+        </tr>
+        {% if news.url %}
+        <tr>
+            <th scope="row">URL</th>
+            <td><a href="{{ news.url }}" target="_blank">{{ news.url }}</a></td>
+        </tr>
+        {% endif %}
+        <tr>
+            <th scope="row"></th>
+            <td>{{ news.content|safe }}</td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+{% endblock %}
+
+</body>
+</html>

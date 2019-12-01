@@ -1,0 +1,22 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/uicds_style.css' %}" rel="stylesheet">
+    {% block head_extends %}{% endblock %}
+</head>
+<body>
+<main id="main">
+        {% block body %}{% endblock %}
+</main>
+</body>
+<footer class="footer mt-5 mb-3">
+    <div class="container-fluid">
+        <hr>
+        <div class="col-5 text-center"><span class="text-muted">&copy;2018-{% now "Y" %}
+            hackerliang VERSION: 1.0.0 . PVG{% now "H:i" %}</span></div>
+    </div>
+</footer>
+</html>
