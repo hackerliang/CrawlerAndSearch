@@ -57,7 +57,7 @@
                 <div>{% highlight result.object.author with query %}</div>
                 <div>{% highlight result.object.content with query %}</div>
                 {% if result.object.url %}
-                    <a href="{{ result.object.url }}" target="_blank" style="color: green">{{ result.object.url }}</a>
+                    <a href="{{ result.object.url }}" target="_blank" style="color: green">{% highlight result.object.url with query %}</a>
                     - <a href="{% url 'news-view' result.object.id %}" target="_blank" style="color: #666">UICds Snapshot</a>
                 {% else %}
                      <a href="{% url 'news-view' result.object.id %}" target="_blank" style="color: green">http://search.uicds.xyz:8000{% url 'news-view' result.object.id %}</a>
