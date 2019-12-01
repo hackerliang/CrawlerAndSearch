@@ -28,6 +28,7 @@
 
 >- Code
 >  - [TF_IDF_Indexing](https://github.com/hackerliang/TF-IDF-MapReduce)
+>  - ![image](README_IMG/linenumber.png)
 >- Explanation
 >  - A python script that comply with system standard input and output, that means this script can both run on hadoop mapreduce and single computer(Assignment4).
 >  - Time
@@ -44,6 +45,7 @@
 
 >- Code
 >  - [TF_IDF_Indexing](https://github.com/hackerliang/TF-IDF-MapReduce)
+>  - ![image](README_IMG/tf-idf.png)
 >- Explanation
 >  - A python script that comply with system standard input and output, that means this script can both run on hadoop mapreduce and single computer(Assignment4).
 >- For txt file, we use TF-IDF as our ranking algorithm
