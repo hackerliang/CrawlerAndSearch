@@ -77,6 +77,96 @@ def spelling(q):
     return spell_corr
 
 
+def suggestion_for_query(q):
+    r = requests.get(url="http://hadoopmaster:8983/solr/project/select?q=text%3A{}&wt=json&indent=true".format(q))
+    # data = r.json()['spellcheck']
+    spell_corr = list()
+    data = None
+    try:
+        # visitt
+        data = r.json()['spellcheck']['suggestions'][1]
+        data = json.loads(str(data).replace("'", '"'))
+
+        # print(data['suggestion'])
+        for i in data['suggestion']:
+            spell_corr.append(i['word'])
+        print(spell_corr)
+        # spell_count = 1
+        # for i in data:
+        #     if spell_count % 2 == 0:
+        #         # Do it
+        #         # print(i)
+        #         i = json.loads(str(i).replace("'", '"'))['misspellingsAndCorrections'][1]
+        #         spell_corr.append(i)
+        #     else:
+        #         pass
+        #     spell_count += 1
+        # data = data[1]
+        # data = str(data)
+        # data = data.replace("'", '"')
+        # data = json.loads(data)
+        # data = data['misspellingsAndCorrections']
+    except:
+        # print("NN")
+        pass
+    # print(data)
+    try:
+        if spell_corr:
+            pass
+        else:
+            spell_corr = None
+    except:
+        pass
+    return spell_corr
+
+def suggestion_for_ajax(request):
+    q = request.GET.get("q")
+    print(request.GET)
+    print(q)
+    r = requests.get(url="http://hadoopmaster:8983/solr/project/select?q=text%3A{}&wt=json&indent=true".format(q))
+    # data = r.json()['spellcheck']
+    spell_corr = list()
+    data = None
+    try:
+        # visitt
+        data = r.json()['spellcheck']['suggestions'][1]
+        data = json.loads(str(data).replace("'", '"'))
+
+        # print(data['suggestion'])
+        for i in data['suggestion']:
+            spell_corr.append(i['word'])
+        print(spell_corr)
+        # spell_count = 1
+        # for i in data:
+        #     if spell_count % 2 == 0:
+        #         # Do it
+        #         # print(i)
+        #         i = json.loads(str(i).replace("'", '"'))['misspellingsAndCorrections'][1]
+        #         spell_corr.append(i)
+        #     else:
+        #         pass
+        #     spell_count += 1
+        # data = data[1]
+        # data = str(data)
+        # data = data.replace("'", '"')
+        # data = json.loads(data)
+        # data = data['misspellingsAndCorrections']
+    except:
+        # print("NN")
+        pass
+    # print(data)
+    try:
+        if spell_corr:
+            pass
+        else:
+            spell_corr = None
+    except:
+        pass
+    return HttpResponse(json.dumps({
+        'result': spell_corr
+    }))
+
+
 def news_view(request,news_id):
     news = get_object_or_404(News, pk=news_id)
     context = dict()
@@ -230,6 +320,8 @@ class SearchView(object):
             context['suggestion'] = spelling(self.get_query())
 
         context.update(self.extra_context())
+
+        # suggestion_for_query(self.get_query())
 
         return context
 

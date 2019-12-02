@@ -9,12 +9,70 @@
 {#    <title>A Simple Searching System</title>#}
 {#    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">#}
 {#</head>#}
+{% block head_extends %}
+    <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+{% endblock %}
 {% block body %}
     <style>
         span.highlighted{
             color: #c00;
         }
     </style>
+    <style>
+        .ui-autocomplete{
+            list-style-type: none;
+            list-style-position: inside;
+            background: #f1f1f1;
+        }
+    </style>
+
+{#    <script>#}
+{#        $(function () {#}
+{#            $("#sear").on('input', function () {#}
+{#                $.ajax({#}
+{#                url: '/search/ajax',#}
+{#                data: {#}
+{#                    q: $("#sear").val()#}
+{#                },#}
+{#                dataType: 'json',#}
+{#                success: data => {#}
+{#                    console.log(data['result']);#}
+{#                    $("#sear").autocomplete({#}
+{#                        source: data['result'],#}
+{#                        minLength: 3,#}
+{#                        appendTo: "#sear",#}
+{#                        position: {my : "top", at:"bottom"}#}
+{#                    });#}
+{#                }#}
+{#            });#}
+{#            })#}
+{#        });#}
+{#    </script>#}
+        <script>
+        $(function () {
+            $("#searchbar").on('input', function () {
+                $.ajax({
+                url: '/search/ajax',
+                data: {
+                    q: $("#searchbar").val()
+                },
+                dataType: 'json',
+                success: data => {
+                    console.log(data['result']);
+                    if (data['result'] != null){
+                    $("#searchbar").autocomplete({
+                        source: data['result'],
+                        minLength: 1,
+                        minChars: 0,
+                        autofocus: true
+                    });}
+                }
+            });
+            })
+        });
+    </script>
 
     <form method="get" action=".">
         <nav class="navbar navbar-expand-lg gbg-cloudy-knoxville">

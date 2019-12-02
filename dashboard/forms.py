@@ -24,7 +24,7 @@ def model_choices(using=DEFAULT_ALIAS):
 
 class SearchForm(forms.Form):
     q = forms.CharField(required=False, label=False,
-                        widget=forms.TextInput(attrs={'type': 'search', 'class': 'form-control'}))
+                        widget=forms.TextInput(attrs={'type': 'search', 'class': 'form-control', 'id': 'searchbar'}))
 
     def __init__(self, *args, **kwargs):
         self.searchqueryset = kwargs.pop('searchqueryset', None)
