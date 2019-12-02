@@ -213,6 +213,7 @@ HAYSTACK_CONNECTIONS = {
         'ADMIN_URL': 'http://hadoopmaster:8983/solr/admin/cores',
         'INCLUDE_SPELLING': True,
         'BATCH_SIZE': 1000,  # How many records should be updated at once via the management commands
+        'TIMEOUT': 60 * 5,
     },
 }
 
