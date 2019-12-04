@@ -41,6 +41,6 @@ for u in urls:
             title="Gutenberg-2019-11-30_{}".format(os.path.split(u)[-1]),
             author="Gutenberg",
             url=u,
-            body=txt
+            content=txt
         )
         print("Insert One {}".format(os.path.split(u)[-1]))
