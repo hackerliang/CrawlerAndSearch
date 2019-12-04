@@ -121,8 +121,8 @@ def suggestion_for_query(q):
 
 def suggestion_for_ajax(request):
     q = request.GET.get("q")
-    print(request.GET)
-    print(q)
+    # print(request.GET)
+    # print(q)
     r = requests.get(url="http://hadoopmaster:8983/solr/project/select?q=text%3A{}&wt=json&indent=true".format(q))
     # data = r.json()['spellcheck']
     spell_corr = list()
