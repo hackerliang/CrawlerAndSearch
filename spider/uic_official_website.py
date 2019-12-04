@@ -31,7 +31,7 @@ def get_uic_content(url):
             title=title,
             author=author,
             url=url,
-            body=content
+            content=content
         )
     print(url)
 
